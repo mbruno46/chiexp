@@ -281,7 +281,7 @@ class chisquare:
                 _cov=gg[:,:,0]+2.*numpy.sum(gg[:,:,1:wopt+1],axis=2)
                 _cov /= (float)(ncnfg)
 
-                if plot and MATPLOTIB:
+                if plot and MATPLOTLIB:
                     rho=numpy.r_[chiexp_t[0:wmax]/chiexp_t[0],[0.]*(wmax+wopt)]
                     drho=numpy.zeros((wmax,))
                     for t in range(wmax):
@@ -391,7 +391,7 @@ class chisquare:
         #elif method=='eig':
         #    dQ=self.ce[1]/self.ce[0] * numpy.mean(dcexp)
         
-        if plot and MATPLOTIB:
+        if plot and MATPLOTLIB:
             plt.figure()
             plt.title('Probability distribution')
             plt.ylabel('$P(\chi^2)$')
