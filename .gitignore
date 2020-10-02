@@ -1,0 +1,17 @@
+.DS_Store
+
+# ignores the compiled c python files and jupyter notebooks
+__pycache__/
+*.pyc
+*.ipynb*
+*.so
+!tutorials/*ipynb
+matplotlib
+
+# ignores vim swap files
+*.swp
+
+# ignores files from doc
+doctrees/
+html/
+
