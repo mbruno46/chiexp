@@ -149,7 +149,8 @@ class chisquare:
 
 
     def chisq(self,p):
-        """ Returns the chi square from the input parameters `p`
+        """ 
+        Returns the chi square from the input parameters `p`.
         """
         self.set_pars(p)
         for i in range(self.n):
@@ -158,7 +159,8 @@ class chisquare:
    
 
     def fit(self,p0,min_search):
-        """ Minimizes the chi square starting from the initial guess parameters `p0`
+        """ 
+        Minimizes the chi square starting from the initial guess parameters `p0`
         
         Parameters:
             p0 (array): the initial guess values of the parameters
@@ -175,7 +177,8 @@ class chisquare:
 
 
     def set_pars(self,p0):
-        """ Sets the parameters of the function at the mininum of the chi square
+        """
+        Sets the parameters to the input values `p0`
         """
         if len(p0)!=self.np:
             raise ChiExpError('unexpected number of parameters')
@@ -184,7 +187,8 @@ class chisquare:
 
 
     def derfit(self):
-        """ Returns the derivative of the parameters w.r.t. Y
+        """ 
+        Returns the derivative of the parameters w.r.t. Y
 
         At the minimum the parameters depend on the input observables; their
         errors can be obtained by error propagation through the derivatives
@@ -200,67 +204,49 @@ class chisquare:
 
     
     def chiexp(self,cov,Nrep=None,Stau=1.5,Wopt=None,plot=False):
-        """ The core function that computes the expected chi square
-
-        Parameters
-        ----------
-        cov: list or numpy.ndarray
-           the covariance matrix is assumed if the object passed has 
-           is a N-by-N matrix;
-           otherwise if it is a M-by-N matrix the program
-           assumes that it contains the fluctuations of the N observables
-           over M configurations
-        Nrep: list, optional
-           number of configurations per replica, e.g. if ``Nrep=[N1,N2,N3]`` then
-           ``M=N1+N2+N3``
-        Stau: float, optional
-           used in the automatic window procedure only if `cov` contains 
-           the fluctuations of the observable, i.e. `cov` is M-by-N
-        plot: bool, optional
-           if `cov` contains the fluctuations of the observable this flag
-           produces a plot with the autocorrelation function corresponding
-           to the expected chi square
-
-        Returns
-        -------
-        float
-            the expected chi square
-        float
-            its error
-        matrix
-            the matrix :math:`W^{1/2} (1-P) W^{1/2}`
-        matrix 
-            if cov contains the fluctuations, this is the estimated 
-            covariance matrix using the same window from the expected chi 
-            square; otherwise it is a copy of cov 
-
-        Note
-        ----
-        The additional parameters `Nrep`,`Stau` and `plot` are ignored if `cov` 
-        corresponds to the covariance matrix, i.e. it is N-by-N.
-        
-        Note
-        ----
-        The matrix :math:`[C^{1/2} W^{1/2} (1-P) W^{1/2} C^{1/2}]` can be accessed
-        by invoking the ``nu`` element of the ``chisquare`` class
-
         """
+        Computes the expected chi square
 
-        if self.pars is None:
-            raise StandardError('the methods fit or pars should be called before chiexp')
+        Parameters:
+            cov (list or array): the covariance matrix is assumed if the object passed has 
+                                 is a N-by-N 2D array; otherwise if it is a M-by-N 2D array the program
+                                 assumes that it contains the fluctuations of the N observables
+                                 over M configurations
+            Nrep (list, optional): number of configurations per replica, e.g. if ``Nrep=[N1,N2,N3]`` then
+                                   ``M=N1+N2+N3``
+            Stau (float, optional): parameter used in the automatic window procedure
+            plot (bool, optional): if set to `True` the program produces a plot with the autocorrelation 
+                                   function of the expected chi square
 
-        g=numpy.array([self.df(xx,self.pars) for xx in self.x]) # N x Na matrix
+        Returns:
+            float: the expected chi square
+            float: the error of the expected chi square
+            array: if cov contains the fluctuations, this is the estimated 
+                   covariance matrix using the same window for all elements 
+                   from the expected chi square; otherwise it is a copy of `cov`
+
+        Note:
+            The additional parameters `Nrep`,`Stau` and `plot` are ignored if `cov` 
+            corresponds to the covariance matrix, i.e. it is a N-by-N array.
+        
+        Note:
+            The matrix :math:`[C^{1/2} W^{1/2} (1-P) W^{1/2} C^{1/2}]` can be accessed
+            by invoking the ``nu`` element of the ``chisquare`` class
+        """
+        g=numpy.array([self.df(*self.x[i,:], *self.p) for i in range(self.n)]) # N x Na matrix
         Wg=self.W @ g
 
-        Hinv=numpy.linalg.inv((g.T).dot(self.W).dot(g))
-        PP=self.W - Wg.dot(Hinv).dot(Wg.T)
+        Hmat = g.T @ self.W @ g # Na x Na matrix
+        Hinv=numpy.linalg.inv(Hmat) 
+
+        PP=self.W - Wg @ Hinv @ Wg.T
         
         if isinstance(cov,(list,numpy.ndarray)):
-            if numpy.shape(cov)==(self.N,self.N):
+            if numpy.shape(cov)==(self.n,self.n):
                 _cov=numpy.array(cov)
                 ce=numpy.trace(PP.dot(_cov))
                 dce=0
-            elif numpy.shape(cov)[1]==self.N:
+            elif numpy.shape(cov)[1]==self.n:
                 ncnfg=numpy.shape(cov)[0]
                 _yy=numpy.mean(cov,axis=0)
                 _y = numpy.array(cov) - numpy.array([_yy]*ncnfg) # computes fluctuations
@@ -300,23 +286,23 @@ class chisquare:
                     plt.legend(loc='upper right')
                     plt.show()
             else:
-                raise ValueError('Unexpected cov, neither %dx%d nor Mx%d matrix' % (self.N,self.N,self.N))
+                raise ValueError('Unexpected cov, neither %dx%d nor Mx%d matrix' % (self.n,self.n,self.n))
         else:
-            raise ValueError('Unexpected cov, neither %dx%d nor Mx%d matrix' % (self.N,self.N,self.N))
+            raise ChiExpError('Unexpected cov, neither %dx%d nor Mx%d matrix' % (self.n,self.n,self.n))
 
         # checks cov matrix before taking square root
-        ev=numpy.linalg.eig(_cov)[0]
-        if numpy.any(ev<0):
-            print('WARNING: covest has negative eigenvalues with automatic window = %d' % (wopt))
-            Csqroot=sqrtm(_cov)
+        [w,v] = numpy.linalg.eig(_cov)
+        if numpy.any(w<0):
+            msg=f"""The estimated covariance matrix has negative eigenvalues with (automatic) window = {wopt}
+                    Consider reducing the window by passing the parameter W"""
+            raise ChiExpError('The estimate covariance matrix has negative eigenvalues with automatic window = %d' % (wopt))
         else:
-            u,s,v=numpy.linalg.svd(_cov,full_matrices=True)
-            Csqroot=u.dot(numpy.diag(numpy.sqrt(s)).dot(v))
+            Csqroot= v @ numpy.diag(numpy.sqrt(w)) @ v.T
                     
-        self.nu=(Csqroot).dot(PP).dot(Csqroot)
+        self.nu= Csqroot @ PP @ Csqroot
         self.ce = [ce,dce]
         
-        return [ce,dce,PP,_cov]
+        return [ce,dce,_cov]
 
     def dchiexp(self):
         return numpy.sqrt(2.*numpy.trace(self.nu @ self.nu))
@@ -367,7 +353,7 @@ class chisquare:
             
         if method=='MC':
             for i in range(nmc):
-                z=numpy.random.normal(0.,1.,self.N)
+                z=numpy.random.normal(0.,1.,self.n)
                 cexp.append( z.dot(self.nu).dot(z).real )
                 cexp_i.append( z.dot(self.nu).dot(z).imag )
         elif method=='eig':
@@ -383,7 +369,7 @@ class chisquare:
             ev=ev*(ev>eps)
             
             for i in range(nmc):
-                z=numpy.random.normal(0.,1.,self.N)
+                z=numpy.random.normal(0.,1.,self.n)
             
                 cexp.append( ev.dot(z**2) )
                 cexp_i.append( evi.dot(z**2) )
