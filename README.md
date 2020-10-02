@@ -27,9 +27,9 @@ in any script by typing
 >> help chiexp
 ```
 
-We also provide also a Python version contained
+We also provide a Python module contained
 in the directory [`lib/python`](./lib/python), that can be easily 
-imported
+imported with
 
 ```python
 >>> import sys
