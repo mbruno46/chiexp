@@ -1,15 +1,27 @@
-####################################################
+#################################################################################
 #
-# Copyright (c) 2017-19 Mattia Bruno, Rainer Sommer.
+# chiexp.py
+# Copyright (C) 2017-20 Mattia Bruno, Rainer Sommer
+# 
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
-####################################################
+#################################################################################
 
 import numpy
 import inspect
-#from scipy.optimize import minimize
-#from scipy.linalg import sqrtm
-#import sympy
-#from sympy.parsing.sympy_parser import parse_expr
+
 try:
     import matplotlib.pyplot as plt
     MATPLOTLIB=True
@@ -269,7 +281,7 @@ class chisquare:
                 _cov=gg[:,:,0]+2.*numpy.sum(gg[:,:,1:wopt+1],axis=2)
                 _cov /= (float)(ncnfg)
 
-                if plot:
+                if plot and MATPLOTIB:
                     rho=numpy.r_[chiexp_t[0:wmax]/chiexp_t[0],[0.]*(wmax+wopt)]
                     drho=numpy.zeros((wmax,))
                     for t in range(wmax):
@@ -379,7 +391,7 @@ class chisquare:
         #elif method=='eig':
         #    dQ=self.ce[1]/self.ce[0] * numpy.mean(dcexp)
         
-        if plot:
+        if plot and MATPLOTIB:
             plt.figure()
             plt.title('Probability distribution')
             plt.ylabel('$P(\chi^2)$')
