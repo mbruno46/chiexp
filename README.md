@@ -12,6 +12,9 @@ If you use this library in your publications please consider citing:
 
  - [[1][1]] M. Bruno, R. Sommer, In preparation.
 
+### Authors
+
+Copyright (C) 2017-20 Mattia Bruno, Rainer Sommer
 
 ## Installation
 
