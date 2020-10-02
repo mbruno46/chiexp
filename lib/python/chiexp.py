@@ -52,7 +52,7 @@ def eval_chiexp(gam,mat,ncnfg):
     N=numpy.shape(gam)[2]
     c=numpy.zeros((N,))
     for i in range(N):
-        c[i] = numpy.trace(mat.dot(gam[:,:,i]))
+        c[i] = numpy.trace(mat @ gam[:,:,i])
     return c/(float)(ncnfg)
 
 
@@ -72,6 +72,8 @@ def _find_window(rho, N, Stau):
     if (flag==0):
         print('Warning: automatic window procedure failed')
         Wopt = Wmax
+    else:
+        print(f'Automatic window set at {Wopt}')
     return [Wopt, Wmax]
 
 
@@ -307,59 +309,44 @@ class chisquare:
     def dchiexp(self):
         return numpy.sqrt(2.*numpy.trace(self.nu @ self.nu))
     
-    def qfit(self,method='MC',nmc=5000,plot=False):
-        """ Computes the quality of fit
+    def qfit(self,method='eig',nmc=5000,plot=False):
+        """ 
+        Computes the quality of fit
 
-        Parameters
-        ----------
-        method: string, optional
-           string specifying the method to estimate the quality of fit. 
-           Accepted values are 'MC' (default) for a pure Monte Carlo estimate 
-           or 'eig' for the formula based on the eigenvalues of the matrix nu. 
-        nmc: int, optional
-           number of Monte Carlo samples used to estimate the quality of fit
-        plot: bool, optional
-           flag to plot the probabilty distribution of the expected chi square
+        Parameters:
+            method (string, optional) : string specifying the method to estimate the 
+               quality of fit. Accepted values are 'MC' for a pure Monte Carlo estimate 
+               or 'eig' (default) for the formula based on the eigenvalues of the matrix `nu`. 
+            nmc (int, optional) : number of Monte Carlo samples used to estimate the quality of fit.
+                                  Default is 5000.
+            plot (bool, optional): if set to True plots the probabilty distribution of the 
+                                   expected chi square
 
-        Returns
-        -------
-        float
-            the quality of fit
-        float
-            its error
-        numpy.ndarray
-            the measurements of the expected chi square along the Monte Carlo history
+        Returns:
+            float: the quality of fit
+            float: the error of the quality of fit
+            array: the Monte Carlo history of the expected chi square
 
-        Note
-        ----
-        The class must know the value of the chi square at the
-        minimum, which means that either `chiexp.fit` or `chiexp.pars` must 
-        be called before qfit.
-
+        Note:
+            The class must know the value of the chi square at the
+            minimum, which means that either `fit` or `chisq` must 
+            be called before `qfit`.
+            
+        Note:
+            If method is set to 'MC' the error of the quality of fit is based only the 
+            MC sampling. If the method is set to 'eig' the error of the quality of fit 
+            also includes the propagation of the error of the covariance matrix.
         """
-
-        if self.pars is None:
-            raise StandardError('the methods fit or pars should be called before qfit')
-
         cexp=[]
-        cexp_i=[]
         dcexp=[]
         
-        # checks if nu is potentially complex
-        if numpy.trace(self.nu).imag>1e-13:
-            raise ValueError('nu is complex')
-        if numpy.trace(self.nu).real<0:
-            raise ValueError('nu is negative')
-            
         if method=='MC':
             for i in range(nmc):
                 z=numpy.random.normal(0.,1.,self.n)
-                cexp.append( z.dot(self.nu).dot(z).real )
-                cexp_i.append( z.dot(self.nu).dot(z).imag )
+                cexp.append( z @ self.nu @ z )
         elif method=='eig':
             ev=numpy.linalg.eig(self.nu)[0]
             ev=ev.real
-            evi=ev.imag
             
             # sorts eigenvalues, such that first is positive and largest
             ev=numpy.sort(ev)[::-1]
@@ -371,20 +358,13 @@ class chisquare:
             for i in range(nmc):
                 z=numpy.random.normal(0.,1.,self.n)
             
-                cexp.append( ev.dot(z**2) )
-                cexp_i.append( evi.dot(z**2) )
+                cexp.append( ev @ z**2 )
                 
-                x = (self.c2 - ev[1:].dot(z[1:]**2))/ev[0]
+                x = (self.c2 - ev[1:] @ z[1:]**2)/ev[0]
                 if x>0:
                     dcexp.append( numpy.exp(-x*0.5)*0.5/numpy.sqrt(x) )
                 else:
                     dcexp.append(0.)
-
-        # mean of imag part < 2 * its error
-        vi = numpy.abs(numpy.mean(cexp_i))
-        ei = numpy.sqrt(numpy.var(cexp_i)/nmc)
-        if vi>2*ei:
-            raise ValueError('tr(nu) is complex, imaginary part = %.2e +- %.2e' % (vi,ei))
             
         th=numpy.array(cexp)<self.c2
         Q=1.0 - numpy.mean(th)

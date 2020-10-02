@@ -2,8 +2,6 @@ import numpy
 import sys
 import os
 
-from scipy.optimize import minimize
- 
 p = os.path.realpath(__file__)
 sys.path.append(f'{p[:-10]}/../../lib/python')
 from chiexp import chisquare
