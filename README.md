@@ -21,21 +21,27 @@ imported
 
 ```python
 >>> import sys
->>> sys.path.append('/path/to/chiexp/directory/lib/python/chiexp')
->>> from chiexp import *
+>>> sys.path.append('/path/to/chiexp/directory/lib/python')
+>>> from chiexp import chisquare
 >>> help(chisquare)
 ```
 
 ## Documentation
 
-Examples for Matlab can be found in the folder [example](./examples/)
-and a full documentation can be found in [HTML][2]
-or in [PDF][3].
+Examples for can be found in [here](./examples/), while
+the documentation of the package can be found in [HTML][2]
+or in [PDF][3] format
 
 If you use this library in your publications please consider citing:
 
  - [[1][1]] M. Bruno, R. Sommer, In preparation.
 
+
+## Task list
+
+ - [ ] support multiple ensembles python
+ - [ ] support multiple ensembles matlab
+ 
 [1]: https://arxiv.org
-[2]: https://mabruno.gitlab.io/chiexp
-[3]: ./doc/chiexp-doc.pdf
+[2]: https://mbruno46.github.io/chiexp
+[3]: ./docs/chiexp-doc.pdf
