@@ -21,7 +21,7 @@ jobs:
           path: chiexp
 
       - name: Deploy
-        uses: mbruno46/deploy-sphinx-doc
+        uses: mbruno46/deploy-sphinx-doc@v1
         with:
           source-dir: doc
           doc-branch: 'gh-pages'	  
