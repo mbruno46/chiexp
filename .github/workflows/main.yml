@@ -1,0 +1,27 @@
+name: Deploy Doc
+
+on: [push]
+
+jobs:
+  deploy:
+    
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.6
+          architecture: x64
+   
+      - name: Clone repository
+	uses: actions/checkout@v2
+	with:
+	  path: chiexp
+
+      - name: Deploy
+        uses: mbruno46/deploy-sphinx-doc
+        with:
+	  source-dir: doc
+          doc-branch: 'gh-pages'	  
