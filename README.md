@@ -5,8 +5,15 @@
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
 A package to compute the expectation value of the chi squared defined 
-from arbitrary regularizations of the inverse covariance matrix, following the results of 
-Ref. [[1][1]].
+from arbitrary regularizations of the inverse covariance matrix.
+
+
+- **Website:** https://mbruno46.github.io/chiexp/
+- **Documentation:** https://mbruno46.github.io/chiexp/
+- **Examples:** [python](./examples/python), [matlab](./examples/matlab)
+- **Source code:** [python](./lib/python), [matlab](./lib/matlab)
+- **Bug reports:** https://github.com/mbruno46/chiexp/issues
+
 
 If you use this library in your publications please consider citing:
 
@@ -38,11 +45,10 @@ imported with
 >>> help(chisquare)
 ```
 
-## Documentation
-
-Examples for can be found [here](./examples/), while
-the documentation of the package can be found in [HTML][2]
-or in [PDF][3] format
+To build the documentation locally download the git repository and 
+run `make html` or `make latexpdf` from the `doc` folder. 
+It requires the `sphinx-build` command so make sure that `sphinx`
+is properly installed (`pip install sphinx`).
 
 ## Task list
 
