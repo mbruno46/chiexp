@@ -15,8 +15,6 @@
 # import os
 import sys
 sys.path.insert(0, '../lib/python')
-import matplotlib as mpl
-mpl.use('nbAgg')
 
 # -- Project information -----------------------------------------------------
 
