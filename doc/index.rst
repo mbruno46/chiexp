@@ -32,7 +32,6 @@ The package is written primarily for Matlab, but we provide also a Python
 implementation in the directory `chiexp`.
 Examples for Matlab can be found in the folder `examples`.
 
-..
 .. toctree::
    :maxdepth: 1
    :caption: The documentation can be found here

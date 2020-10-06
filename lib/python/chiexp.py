@@ -109,8 +109,6 @@ class chisquare:
           implies that `f` must be defined using `x` as first and unique
           kinematic variable.
           
-    Examples:
-    >>> 
     """
 
     def __init__(self,x,y,W,f,df,v='x'):
@@ -181,8 +179,7 @@ class chisquare:
             min_search (function): an external minimizer
             
         Returns:
-            list: output parameters
-            float: value of the chi square at the minimum
+            list: output parameters and the value of the chi square at the minimum
         """
         res = min_search(lambda p:self.chisq(p),p0)
         self.c2 = res.fun
@@ -222,30 +219,24 @@ class chisquare:
         Computes the expected chi square
 
         Parameters:
-            cov (list or array): the covariance matrix is assumed if the object passed has 
-                                 is a N-by-N 2D array; otherwise if it is a M-by-N 2D array the program
-                                 assumes that it contains the fluctuations of the N observables
-                                 over M configurations
-            Nrep (list, optional): number of configurations per replica, e.g. if ``Nrep=[N1,N2,N3]`` then
-                                   ``M=N1+N2+N3``
-            Stau (float, optional): parameter used in the automatic window procedure
-            plot (bool, optional): if set to `True` the program produces a plot with the autocorrelation 
-                                   function of the expected chi square
+           cov (list or array): the covariance matrix is assumed if the object passed has 
+                                is a N-by-N 2D array; otherwise if it is a M-by-N 2D array the program
+                                assumes that it contains the fluctuations of the N observables
+                                over M configurations
+           Nrep (list, optional): number of configurations per replica, e.g. if ``Nrep=[N1,N2,N3]`` then
+                                  ``M=N1+N2+N3``
+           Stau (float, optional): parameter used in the automatic window procedure
+           plot (bool, optional): if set to `True` the program produces a plot with the autocorrelation 
+                                  function of the expected chi square
 
         Returns:
-            float: the expected chi square
-            float: the error of the expected chi square
-            array: if cov contains the fluctuations, this is the estimated 
-                   covariance matrix using the same window for all elements 
-                   from the expected chi square; otherwise it is a copy of `cov`
+           list: the expected chi square, its error and the estimated covariance matrix using the same window, from the expected chi square, or all elements; if `cov` is a N-by-N 2D array it returns a copy of it
 
         Note:
-            The additional parameters `Nrep`,`Stau` and `plot` are ignored if `cov` 
-            corresponds to the covariance matrix, i.e. it is a N-by-N array.
-        
-        Note:
-            The matrix :math:`[C^{1/2} W^{1/2} (1-P) W^{1/2} C^{1/2}]` can be accessed
-            by invoking the ``nu`` element of the ``chisquare`` class
+           The additional parameters `Nrep`,`Stau` and `plot` are ignored if `cov` 
+           corresponds to the covariance matrix, i.e. it is a N-by-N array.
+           The matrix :math:`[C^{1/2} W^{1/2} (1-P) W^{1/2} C^{1/2}]` can be accessed
+           by invoking the ``nu`` element of the ``chisquare`` class
         """
         g=numpy.array([self.df(*self.x[i,:], *self.p) for i in range(self.n)]) # N x Na matrix
         Wg=self.W @ g
@@ -326,28 +317,24 @@ class chisquare:
         Computes the quality of fit
 
         Parameters:
-            method (string, optional) : string specifying the method to estimate the 
-               quality of fit. Accepted values are 'MC' for a pure Monte Carlo estimate 
-               or 'eig' (default) for the formula based on the eigenvalues of the matrix `nu`. 
-            nmc (int, optional) : number of Monte Carlo samples used to estimate the quality of fit.
-                                  Default is 5000.
-            plot (bool, optional): if set to True plots the probabilty distribution of the 
-                                   expected chi square
+           method (string, optional) : string specifying the method to estimate the 
+              quality of fit. Accepted values are 'MC' for a pure Monte Carlo estimate 
+              or 'eig' (default) for the formula based on the eigenvalues of the matrix `nu`. 
+           nmc (int, optional) : number of Monte Carlo samples used to estimate the quality of fit.
+                                 Default is 5000.
+           plot (bool, optional): if set to True plots the probabilty distribution of the 
+                                  expected chi square
 
         Returns:
-            float: the quality of fit
-            float: the error of the quality of fit
-            array: the Monte Carlo history of the expected chi square
+           list: the quality of fit, the error of the quality of fit and the Monte Carlo history of the expected chi square
 
         Note:
-            The class must know the value of the chi square at the
-            minimum, which means that either `fit` or `chisq` must 
-            be called before `qfit`.
-            
-        Note:
-            If method is set to 'MC' the error of the quality of fit is based only the 
-            MC sampling. If the method is set to 'eig' the error of the quality of fit 
-            also includes the propagation of the error of the covariance matrix.
+           The class must know the value of the chi square at the
+           minimum, which means that either `fit` or `chisq` must 
+           be called before `qfit`.
+           If method is set to 'MC' the error of the quality of fit is based only the 
+           MC sampling. If the method is set to 'eig' the error of the quality of fit 
+           also includes the propagation of the error of the covariance matrix.
         """
         cexp=[]
         dcexp=[]
