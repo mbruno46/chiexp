@@ -1,6 +1,8 @@
 # ChiExp
 
 [![Test Octave](https://github.com/mbruno46/chiexp/workflows/Test%20Octave/badge.svg)](https://github.com/mbruno46/chiexp/actions?query=workflow%3ATest%20Octave)
+[![Test Python](https://github.com/mbruno46/chiexp/workflows/Test%20Python/badge.svg)](https://github.com/mbruno46/chiexp/actions?query=workflow%3ATest%20Python)
+![Build Doc](https://github.com/mbruno46/chiexp/workflows/Build%20Doc/badge.svg)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
 [![Python](https://img.shields.io/badge/Python-3.6+-brightgreen.svg)](https://www.python.org)
