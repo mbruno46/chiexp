@@ -1,4 +1,4 @@
-name: Test Python
+name: Build Doc
 
 on: [push]
 
@@ -20,10 +20,8 @@ jobs:
         with:
           path: chiexp
 
-      - name: Run tests
-	run: |
-	  cd chiexp/examples/python
-	  for F in `ls *py`
-	  do
-	     python3 $F
-	  done
+      - name: Deploy
+        uses: mbruno46/deploy-sphinx-doc@main
+        with:
+          path: doc
+          doc-branch: 'gh-pages'	  
