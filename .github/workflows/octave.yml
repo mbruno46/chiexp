@@ -11,9 +11,9 @@ jobs:
 
       - name: Setup octave
         run: |
-	  apt-get update
-	  apt-get install -y --no-install-recommends gnuplot octave
-	  apt-get clean
+          apt-get update
+          apt-get install -y --no-install-recommends gnuplot octave
+          apt-get clean
 
       - name: Clone repository
         uses: actions/checkout@v2
@@ -21,10 +21,10 @@ jobs:
           path: chiexp
 
       - name: Run tests
-	run: | 
-	  cd chiexp/examples/matlab
-	  for F in `ls *m`
-	  do
-	      octave --no-gui $F
-	  done
-	shell: bash
+        run: | 
+          cd chiexp/examples/matlab
+          for F in `ls *m`
+          do
+              octave --no-gui $F
+          done
+        shell: bash
