@@ -1,8 +1,11 @@
 # ChiExp
 
-[![Python](https://img.shields.io/badge/Python-3.6-brightgreen.svg)](https://www.python.org)
-[![Matlab](https://img.shields.io/badge/MATLAB-R2019b-brightgreen.svg)](https://www.mathworks.com/products/matlab.html)
+[![Test Octave](https://github.com/mbruno46/chiexp/workflows/Test%20Octave/badge.svg)](https://github.com/mbruno46/chiexp/actions?query=workflow%3ATest%20Octave)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+
+[![Python](https://img.shields.io/badge/Python-3.6+-brightgreen.svg)](https://www.python.org)
+[![Matlab](https://img.shields.io/badge/MATLAB-R2019b-brightgreen.svg)](https://www.mathworks.com/products/matlab.html)
+[![Octave](https://img.shields.io/badge/Octave-5.2.0-brightgreen.svg)](https://www.mathworks.com/products/matlab.html)
 
 A package to compute the expectation value of the chi squared defined 
 from arbitrary regularizations of the inverse covariance matrix.
