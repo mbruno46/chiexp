@@ -21,9 +21,9 @@ jobs:
           path: chiexp
 
       - name: Run tests
-	run: |
-	  cd chiexp/examples/python
-	  for F in `ls *py`
-	  do
-	     python3 $F
-	  done
+        run: |
+          cd chiexp/examples/python
+          for F in `ls *py`
+          do
+              python3 $F
+          done
