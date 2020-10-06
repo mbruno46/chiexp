@@ -11,9 +11,9 @@ jobs:
 
       - name: Setup octave
         run: |
-          apt-get update
-          apt-get install -y --no-install-recommends gnuplot octave
-          apt-get clean
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends gnuplot octave
+          sudo apt-get clean
 
       - name: Clone repository
         uses: actions/checkout@v2
