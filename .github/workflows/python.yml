@@ -1,9 +1,9 @@
-name: Deploy Doc
+name: Test/Doc
 
 on: [push]
 
 jobs:
-  deploy:
+  test-doc:
     
     runs-on: ubuntu-latest
 
@@ -19,6 +19,14 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: chiexp
+
+      - name: Run tests
+	run: |
+	  cd chiexp/examples/python
+	  for F in `ls *py`
+	  do
+	     python3 $F
+	  done
 
       - name: Deploy
         uses: mbruno46/deploy-sphinx-doc@main

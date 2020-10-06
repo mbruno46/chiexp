@@ -1,0 +1,30 @@
+name: Test Octave
+
+on: [push]
+
+jobs:
+  test-octave:
+    
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Setup octave
+        run: |
+	  apt-get update
+	  apt-get install -y --no-install-recommends gnuplot octave
+	  apt-get clean
+
+      - name: Clone repository
+        uses: actions/checkout@v2
+        with:
+          path: chiexp
+
+      - name: Run tests
+	run: | 
+	  cd chiexp/examples/matlab
+	  for F in `ls *m`
+	  do
+	      octave --no-gui $F
+	  done
+	shell: bash

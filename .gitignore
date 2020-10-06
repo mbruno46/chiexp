@@ -14,4 +14,4 @@ matplotlib
 # ignores files from doc
 doctrees/
 html/
-
+build

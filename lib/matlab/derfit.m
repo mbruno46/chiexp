@@ -66,7 +66,7 @@ end
 df=[]; c=[]; f=[];
 
 for k=1:2:length(varargin)
-    if ~isstr(varargin{k})
+    if ~ischar(varargin{k})
         error('Additional input field passed with incorrect format');
     end
     switch varargin{k}

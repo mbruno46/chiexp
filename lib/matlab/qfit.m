@@ -44,7 +44,10 @@ if isreal(nu)
     end
 end
 
-rng('shuffle','twister');  % change seeds
+isOctave = exist('OCTAVE_VERSION', 'builtin') ~= 0;
+if ~isOctave % rng not defined in Octave
+    rng('shuffle','twister');  % change seeds
+end
 z=randn(N,nmc);
 
 if ~isempty(ce)
