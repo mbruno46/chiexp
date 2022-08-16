@@ -28,8 +28,8 @@ Autocorrelations can be taken into account in a straight-forward manner by repla
 with :math:`N` the number of configurations and :math:`\Gamma` the autocorrelation function.
 
 
-The package is written primarily for Matlab, but we provide also a Python
-implementation in the directory `chiexp`.
+The package is written primarily for MATLAB, but we provide also a Python
+implementation.
 Examples for Matlab can be found in the folder `examples`.
 
 .. toctree::
@@ -47,17 +47,4 @@ References
 ----------
 
 .. [1] M. Bruno and R. Sommer `title <https://arxiv.org>`__
-
-Differences
------------
-
-1. derivatives :math:`df(x_i,a)/da_\alpha`: in the Python implementation the derivatives
-   are computed analytically using the `sympy` package; in the Matlab library
-   the user can either provide them (analytically), or obtain the numerical estimates
-   by passing the function instead. If they are passed directly the library can also
-   perform a numerical check.
-
-2. in Python a unique class `chisquare` is initialized by the user, which contains all
-   the important methods. In Matlab several functions are provided and the user must
-   follow a simple workflow.
 
