@@ -66,8 +66,30 @@ def eval_chiexp(gam,mat,ncnfg):
     for i in range(N):
         c[i] = numpy.trace(mat @ gam[:,:,i])
     return c/(float)(ncnfg)
+    
+    
+def eval_chiexp_fast(dat, Nrep, mat):
+    w,v = numpy.linalg.eig(mat)
 
+    # N is the number of configs
+    (N,M)=numpy.shape(dat)
+    Wmax=min(Nrep)//2
+    g = numpy.zeros((M,Wmax+1), dtype=numpy.double)
+    ofs=0
+    for Nr in Nrep:
+        imax=ofs+Nr
+        dy = dat[ofs:imax,:]
+        
+        aux = numpy.fft.fft(dy @ v, n=2*Nr, axis=0)
+        aux2 = numpy.fft.ifft(aux * numpy.conj(aux), axis=0)
+        for a in range(M):
+            g[a,:] += aux2[0:Wmax+1,a].real
+        ofs += Nr
+        
+    n = 1./(N-len(Nrep)*numpy.arange(0.,Wmax+1,1.))
+    return (w @ g).real * n / N
 
+    
 def _find_window(rho, N, Stau):
     Wmax = int(len(rho))
     rho_int = 0.
@@ -214,7 +236,7 @@ class chisquare:
         return self.W @ g @ Hinv
 
     
-    def chiexp(self,cov,Nrep=None,Stau=1.5,Wopt=None,plot=False):
+    def chiexp(self,cov,Nrep=None,Stau=1.5,Wopt=None,Wcov=None,plot=False):
         """
         Computes the expected chi square
 
@@ -245,12 +267,13 @@ class chisquare:
         Hinv=numpy.linalg.inv(Hmat) 
 
         PP=self.W - Wg @ Hinv @ Wg.T
-        
+    
         if isinstance(cov,(list,numpy.ndarray)):
             if numpy.shape(cov)==(self.n,self.n):
                 _cov=numpy.array(cov)
                 ce=numpy.trace(PP.dot(_cov))
                 dce=0
+                wopt=None
             elif numpy.shape(cov)[1]==self.n:
                 ncnfg=numpy.shape(cov)[0]
                 _yy=numpy.mean(cov,axis=0)
@@ -259,7 +282,10 @@ class chisquare:
                 if Nrep is None:
                     Nrep=[ncnfg]
                 gg=_gamma(_y,Nrep)
-                chiexp_t = eval_chiexp(gg,PP,ncnfg)
+#                 chiexp_t = eval_chiexp(gg,PP,ncnfg)
+#                 print(numpy.sum(chiexp_t - eval_chiexp_fast(_y,Nrep,PP)))
+                chiexp_t = eval_chiexp_fast(_y,Nrep,PP) 
+                
                 if not Wopt is None:
                     wopt=Wopt
                     wmax=2*Wopt
@@ -268,8 +294,11 @@ class chisquare:
                     [wopt, wmax]=_find_window(chiexp_t/chiexp_t[0],ncnfg,Stau)
                 ce=chiexp_t[0]+2.*numpy.sum(chiexp_t[1:wopt+1])
                 dce=numpy.sqrt((4*wopt+2)/ncnfg)*ce
+                
+                if Wcov is None:
+                    Wcov=wopt
 
-                _cov=gg[:,:,0]+2.*numpy.sum(gg[:,:,1:wopt+1],axis=2)
+                _cov=gg[:,:,0]+2.*numpy.sum(gg[:,:,1:Wcov+1],axis=2)
                 _cov /= (float)(ncnfg)
 
                 if plot and MATPLOTLIB:
@@ -298,15 +327,17 @@ class chisquare:
         # checks cov matrix before taking square root
         [w,v] = numpy.linalg.eig(_cov)
         if numpy.any(w<0):
-            msg=f"""The estimated covariance matrix has negative eigenvalues with (automatic) window = {wopt}
-                    Consider reducing the window by passing the parameter W"""
-            raise ChiExpError('The estimate covariance matrix has negative eigenvalues with automatic window = %d' % (wopt))
+            print('The estimated covariance matrix has negative eigenvalues with automatic window = %d' % (wopt))
+            mask = w>1e-12
+            Csqroot = v[:,mask] @ numpy.diag(numpy.sqrt(w[mask])) @ v[:,mask].T
         else:
             Csqroot= v @ numpy.diag(numpy.sqrt(w)) @ v.T
-                    
+
         self.nu= Csqroot @ PP @ Csqroot
         self.ce = [ce,dce]
-        
+
+        self.PP = PP
+        self.da = Hinv @ Wg.T
         return [ce,dce,_cov]
 
     def dchiexp(self):
@@ -321,9 +352,9 @@ class chisquare:
               quality of fit. Accepted values are 'MC' for a pure Monte Carlo estimate 
               or 'eig' (default) for the formula based on the eigenvalues of the matrix `nu`. 
            nmc (int, optional) : number of Monte Carlo samples used to estimate the quality of fit.
-                                 Default is 5000.
+              Default is 5000.
            plot (bool, optional): if set to True plots the probabilty distribution of the 
-                                  expected chi square
+              expected chi square
 
         Returns:
            list: the quality of fit, the error of the quality of fit and the Monte Carlo history of the expected chi square
@@ -334,15 +365,14 @@ class chisquare:
            be called before `qfit`.
            If method is set to 'MC' the error of the quality of fit is based only the 
            MC sampling. If the method is set to 'eig' the error of the quality of fit 
-           also includes the propagation of the error of the covariance matrix.
+           also includes an estimate of the propagation of the error of the covariance matrix.
         """
         cexp=[]
         dcexp=[]
-        
+
         if method=='MC':
-            for i in range(nmc):
-                z=numpy.random.normal(0.,1.,self.n)
-                cexp.append( z @ self.nu @ z )
+            z=numpy.random.normal(0.,1.,self.n*nmc).reshape(nmc,self.n)
+            cexp = numpy.einsum('ia,ab,bi->i',z,self.nu,z.T)
         elif method=='eig':
             ev=numpy.linalg.eig(self.nu)[0]
             ev=ev.real
@@ -367,7 +397,7 @@ class chisquare:
             
         th=numpy.array(cexp)<self.c2
         Q=1.0 - numpy.mean(th)
-        dQ0=numpy.var(th)/nmc
+        dQ0=numpy.var(th)/(nmc-1)
         if method=='eig':
             dQ1=self.ce[1]/self.ce[0] * numpy.mean(dcexp)
         else:
