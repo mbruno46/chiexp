@@ -327,7 +327,7 @@ class chisquare:
         # checks cov matrix before taking square root
         [w,v] = numpy.linalg.eig(_cov)
         if numpy.any(w<0):
-            print('The estimated covariance matrix has negative eigenvalues with automatic window = %d' % (wopt))
+            print('The estimated covariance matrix has negative eigenvalues with automatic window = %d' % (Wcov))
             mask = w>1e-12
             Csqroot = v[:,mask] @ numpy.diag(numpy.sqrt(w[mask])) @ v[:,mask].T
         else:
