@@ -38,14 +38,14 @@ der = derfit(xx,yy,W,pars,'df',dfunc,'f',func,'c',cc);
 dpars = (der.*repmat(dy',1,4)).^2;
 dpars = sqrt(sum(dpars,1))
 
-% plot
-color={'r','b','k'};
-xax=[0:1e-4:0.1]; Np=length(xax);
-figure; hold on
-for b=1:3
-        errorbar((cc==b).*xx,(cc==b).*yy,(cc==b).*dy,['.' color{b}])
-        errorbar(0,pars(b),dpars(b),'ok');
-        plot(xax,arrayfun(@(i) func(xax(i),pars,b),1:Np),['--' color{b}])
-end
-hold off
-title('Example of chiral extrapolation with combined fit')
+% % plot
+% color={'r','b','k'};
+% xax=[0:1e-4:0.1]; Np=length(xax);
+% figure; hold on
+% for b=1:3
+%         errorbar((cc==b).*xx,(cc==b).*yy,(cc==b).*dy,['.' color{b}])
+%         errorbar(0,pars(b),dpars(b),'ok');
+%         plot(xax,arrayfun(@(i) func(xax(i),pars,b),1:Np),['--' color{b}])
+% end
+% hold off
+% title('Example of chiral extrapolation with combined fit')
