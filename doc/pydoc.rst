@@ -96,11 +96,11 @@ chain of length `nmc`
 .. code-block:: python
 
   >>> nmc=10000
-  >>> [q, dq, h] = c.qfit(nmc, plot=True)
+  >>> [p, dp, h] = c.pvalue(nmc, plot=True)
 
 
-The method `qfit` returns the quality of fit and its error,
-`q` and `dq` respectively, and the Monte Carlo history of 
+The method `pvalue` returns the quality of fit and its error,
+`p` and `dp` respectively, and the Monte Carlo history of 
 :math:`\chi^2` `h`. If the `plot` flag is activated a plot is automatically
 generated with the distribution probability, namely a
 normalized histogram of `h`.

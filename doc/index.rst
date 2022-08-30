@@ -27,10 +27,7 @@ Autocorrelations can be taken into account in a straight-forward manner by repla
 
 with :math:`N` the number of configurations and :math:`\Gamma` the autocorrelation function.
 
-
-The package is written primarily for MATLAB, but we provide also a Python
-implementation.
-Examples for Matlab can be found in the folder `examples`.
+The package contains libraries for both Matlab and Python.
 
 .. toctree::
    :maxdepth: 1
