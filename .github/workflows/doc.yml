@@ -17,8 +17,6 @@ jobs:
    
       - name: Clone repository
         uses: actions/checkout@v2
-        with:
-          path: chiexp
 
       - name: Deploy
         uses: mbruno46/deploy-sphinx-doc@main
