@@ -1,7 +1,7 @@
 #################################################################################
 #
 # chiexp.py
-# Copyright (C) 2017-20 Mattia Bruno, Rainer Sommer
+# Copyright (C) 2017-22 Mattia Bruno, Rainer Sommer
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -248,11 +248,15 @@ class chisquare:
            Nrep (list, optional): number of configurations per replica, e.g. if ``Nrep=[N1,N2,N3]`` then
                                   ``M=N1+N2+N3``
            Stau (float, optional): parameter used in the automatic window procedure
+           Wopt (float, optional): optimal window used in the estimate of expected chi square; if passed `Stau` is ignored
+           Wcov (float, optional): window used in the estimate of all entries of the covariance matrix
            plot (bool, optional): if set to `True` the program produces a plot with the autocorrelation 
                                   function of the expected chi square
 
         Returns:
-           list: the expected chi square, its error and the estimated covariance matrix using the same window, from the expected chi square, or all elements; if `cov` is a N-by-N 2D array it returns a copy of it
+           list: the expected chi square, its error and the estimated covariance matrix; if `Wcov` is not 
+                 passed the window obtained from the autocorrelation function of the expected chi square is used 
+                 for all elements; if `cov` is a N-by-N 2D array it returns a copy of it
 
         Note:
            The additional parameters `Nrep`,`Stau` and `plot` are ignored if `cov` 
@@ -313,7 +317,6 @@ class chisquare:
                     plt.title('ChiExp automatic window procedure')
                     plt.xlabel('[config index]')
                     plt.plot([0,wmax],[0,0],'-k',lw=.75)
-                    ##plt.plot(range(len(chiexp_t)),chiexp_t/chiexp_t[0],'-ob',label='Gamma(t)/Gamma(0)')
                     plt.errorbar(range(wmax),chiexp_t[0:wmax]/chiexp_t[0],drho,fmt='-o',label='Gamma(t)/Gamma(0)')
                     plt.plot([wopt,wopt],[0,0.8],'-r',label='Wopt')
                     plt.xlim(0,wmax)
@@ -343,9 +346,9 @@ class chisquare:
     def dchiexp(self):
         return numpy.sqrt(2.*numpy.trace(self.nu @ self.nu))
     
-    def qfit(self,method='eig',nmc=5000,plot=False):
+    def pvalue(self,method='eig',nmc=5000,plot=False):
         """ 
-        Computes the quality of fit
+        Computes the p-value of the fit
 
         Parameters:
            method (string, optional) : string specifying the method to estimate the 
@@ -364,8 +367,7 @@ class chisquare:
            minimum, which means that either `fit` or `chisq` must 
            be called before `qfit`.
            If method is set to 'MC' the error of the quality of fit is based only the 
-           MC sampling. If the method is set to 'eig' the error of the quality of fit 
-           also includes an estimate of the propagation of the error of the covariance matrix.
+           MC sampling. 
         """
         cexp=[]
         dcexp=[]
@@ -396,17 +398,8 @@ class chisquare:
                     dcexp.append(0.)
             
         th=numpy.array(cexp)<self.c2
-        Q=1.0 - numpy.mean(th)
-        dQ0=numpy.var(th)/(nmc-1)
-        if method=='eig':
-            dQ1=self.ce[1]/self.ce[0] * numpy.mean(dcexp)
-        else:
-            dQ1=0.0
-        dQ=numpy.sqrt(dQ0 + dQ1**2)
-        #if method=='MC':
-        #    dQ=numpy.sqrt(numpy.var(th)/nmc)
-        #elif method=='eig':
-        #    dQ=self.ce[1]/self.ce[0] * numpy.mean(dcexp)
+        p=1.0 - numpy.mean(th)
+        dp=numpy.std(th,ddof=1)/(nmc)**0.5
         
         if plot and MATPLOTLIB:
             plt.figure()
@@ -418,4 +411,4 @@ class chisquare:
             plt.legend(loc='upper right')
             plt.show()
 
-        return [Q,dQ,numpy.array(cexp)]
+        return [p,dp,numpy.array(cexp)]
