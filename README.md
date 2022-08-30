@@ -14,7 +14,7 @@ from arbitrary regularizations of the inverse covariance matrix.
 
 
 - **Website:** https://mbruno46.github.io/chiexp/
-- **Documentation:** https://mbruno46.github.io/chiexp/ [pdf][3]
+- **Documentation:** [web](https://mbruno46.github.io/chiexp/), [pdf][3]
 - **Examples:** [python](./examples/python), [matlab](./examples/matlab)
 - **Source code:** [python](./lib/python), [matlab](./lib/matlab)
 - **Bug reports:** https://github.com/mbruno46/chiexp/issues
