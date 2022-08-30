@@ -39,10 +39,10 @@ for x0 in x0min:
     [ce,dce,_] = cs.chiexp(dat[:,idx])
     print(f'chiexp         = {ce:g} +- {dce:g}')
     
-    [q,dq,h] = cs.qfit()
+    [p,dp,h] = cs.pvalue()
     print(f'chiexp from MC = {numpy.mean(h):g} +- {numpy.sqrt(numpy.var(h)/len(h)):g}')
 
-    res.append([cs.c2, ce, dce, q, dq])
+    res.append([cs.c2, ce, dce, p, dp])
 
 res = numpy.array(res)
 
