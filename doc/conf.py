@@ -13,13 +13,18 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 # import os
+import os
 import sys
-sys.path.insert(0, '../lib/python')
+cwd=os.getcwd()
+p=f'{cwd}/../lib/python'
+print(p)
+sys.path.append(p)
+import chiexp
 
 # -- Project information -----------------------------------------------------
 
 project = u'ChiExp'
-copyright = u'2017-20, Mattia Bruno, Rainer Sommer'
+copyright = u'2017-22, Mattia Bruno, Rainer Sommer'
 author = u'Mattia Bruno, Rainer Sommer'
 
 # The short X.Y version

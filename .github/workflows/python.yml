@@ -3,7 +3,7 @@ name: Test Python
 on: [push]
 
 jobs:
-  test-doc:
+  test-python:
     
     runs-on: ubuntu-latest
 
