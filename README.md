@@ -20,13 +20,13 @@ from arbitrary regularizations of the inverse covariance matrix.
 - **Bug reports:** https://github.com/mbruno46/chiexp/issues
 
 
-If you use this library in your publications please consider citing:
+If you use this library in your publications please cite:
 
- - [[1][1]] M. Bruno, R. Sommer, In preparation.
+ - M. Bruno, R. Sommer, [On fits to correlated and auto-correlated data](https://inspirehep.net/literature/2157883) *Comput.Phys.Commun.* 285 (2023) 108643.
 
 ### Authors
 
-Copyright (C) 2017-20 Mattia Bruno, Rainer Sommer
+Copyright (C) 2017-2020 Mattia Bruno, Rainer Sommer
 
 ## Installation
 
