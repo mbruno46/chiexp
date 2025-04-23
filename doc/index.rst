@@ -43,5 +43,4 @@ or `help(chisquare)` in Python.
 References
 ----------
 
-.. [1] M. Bruno and R. Sommer `title <https://arxiv.org>`__
-
+.. [1] M. Bruno, R. Sommer, `On fits to correlated and auto-correlated data <https://inspirehep.net/literature/2157883>`__ *Comput.Phys.Commun.* 285 (2023) 108643.
