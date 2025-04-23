@@ -1,11 +1,11 @@
 # ChiExp
 
-[![Test Octave](https://github.com/mbruno46/chiexp/workflows/Test%20Octave/badge.svg)](https://github.com/mbruno46/chiexp/actions?query=workflow%3ATest%20Octave)
-[![Test Python](https://github.com/mbruno46/chiexp/workflows/Test%20Python/badge.svg)](https://github.com/mbruno46/chiexp/actions?query=workflow%3ATest%20Python)
-![Build Doc](https://github.com/mbruno46/chiexp/workflows/Build%20Doc/badge.svg)
+[![Test Octave](https://github.com/mbruno46/chiexp/actions/workflows/octave.yml/badge.svg)](https://github.com/mbruno46/chiexp/actions/workflows/octave.yml)
+[![Test Python](https://github.com/mbruno46/chiexp/actions/workflows/python.yml/badge.svg)](https://github.com/mbruno46/chiexp/actions/workflows/python.yml)
+[![Build Doc](https://github.com/mbruno46/chiexp/actions/workflows/doc.yml/badge.svg)](https://github.com/mbruno46/chiexp/actions/workflows/doc.yml)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
-[![Python](https://img.shields.io/badge/Python-3.6+-brightgreen.svg)](https://www.python.org)
+[![Python](https://img.shields.io/badge/Python-3.10+-brightgreen.svg)](https://www.python.org)
 [![Matlab](https://img.shields.io/badge/MATLAB-R2019b-brightgreen.svg)](https://www.mathworks.com/products/matlab.html)
 [![Octave](https://img.shields.io/badge/Octave-5.2.0-brightgreen.svg)](https://www.mathworks.com/products/matlab.html)
 
@@ -26,7 +26,7 @@ If you use this library in your publications please cite:
 
 ### Authors
 
-Copyright (C) 2017-2020 Mattia Bruno, Rainer Sommer
+Copyright (C) 2017-2022 Mattia Bruno, Rainer Sommer
 
 ## Installation
 
