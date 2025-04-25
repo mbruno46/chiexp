@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Python documentation &#8212; ChiExp 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Matlab documentation" href="matlabdoc.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="matlabdoc.html" title="Matlab documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ChiExp 0.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Python documentation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="python-documentation">
+<h1>Python documentation<a class="headerlink" href="#python-documentation" title="Link to this heading">¶</a></h1>
+<p>The package <cite>chiexp</cite> can be loaded in python using the
+standard import command:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="linenos">2</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/path/to/chiexp/directory/lib/python&#39;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="kn">from</span><span class="w"> </span><span class="nn">chiexp</span><span class="w"> </span><span class="kn">import</span> <span class="n">chisquare</span>
+</pre></div>
+</div>
+<section id="module-chiexp">
+<span id="the-chisquare-class"></span><h2>The chisquare class<a class="headerlink" href="#module-chiexp" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="chiexp.chisquare">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chiexp.</span></span><span class="sig-name descname"><span class="pre">chisquare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">W</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'x'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chiexp.chisquare" title="Link to this definition">¶</a></dt>
+<dd><p>A class with the relevant functionalities to compute the
+expected chi square.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>array</em>) – array with the values of the x-axis; 2-D arrays are
+accepted and the second dimension is intepreted as internal kinematic
+index</p></li>
+<li><p><strong>y</strong> (<em>array</em>) – array with the values of the y-axis, of same length as <cite>x</cite></p></li>
+<li><p><strong>W</strong> (<em>array</em>) – the weight matrix, N-by-N, or its diagional of length N</p></li>
+<li><p><strong>f</strong> (<em>function</em>) – callable function or lambda function defining the fitted function;
+the program assumes <cite>x</cite> correspond to the first arguments</p></li>
+<li><p><strong>df</strong> (<em>function</em>) – callable function or lambda function returning an array
+that contains the gradient of <cite>f</cite>, namely <span class="math notranslate nohighlight">\(\partial
+\phi(\{p\},\{x_i\})/\partial p_\alpha\)</span></p></li>
+<li><p><strong>v</strong> (<em>str</em><em>, </em><em>optional</em>) – a string with the list of variables used in <cite>f</cite> as
+the kinematic coordinates. Default value corresponds to <cite>x</cite>, which
+implies that <cite>f</cite> must be defined using <cite>x</cite> as first and unique
+kinematic variable.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="chiexp.chisquare.chiexp">
+<span class="sig-name descname"><span class="pre">chiexp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cov</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Nrep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Stau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Wopt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Wcov</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chiexp.chisquare.chiexp" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the expected chi square</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cov</strong> (<em>list</em><em> or </em><em>array</em>) – the covariance matrix is assumed if the object passed has
+is a N-by-N 2D array; otherwise if it is a M-by-N 2D array the program
+assumes that it contains the fluctuations of the N observables
+over M configurations</p></li>
+<li><p><strong>Nrep</strong> (<em>list</em><em>, </em><em>optional</em>) – number of configurations per replica, e.g. if <code class="docutils literal notranslate"><span class="pre">Nrep=[N1,N2,N3]</span></code> then
+<code class="docutils literal notranslate"><span class="pre">M=N1+N2+N3</span></code></p></li>
+<li><p><strong>Stau</strong> (<em>float</em><em>, </em><em>optional</em>) – parameter used in the automatic window procedure</p></li>
+<li><p><strong>Wopt</strong> (<em>float</em><em>, </em><em>optional</em>) – optimal window used in the estimate of expected chi square; if passed <cite>Stau</cite> is ignored</p></li>
+<li><p><strong>Wcov</strong> (<em>float</em><em>, </em><em>optional</em>) – window used in the estimate of all entries of the covariance matrix</p></li>
+<li><p><strong>plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – if set to <cite>True</cite> the program produces a plot with the autocorrelation
+function of the expected chi square</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>the expected chi square, its error and the estimated covariance matrix; if <cite>Wcov</cite> is not</dt><dd><p>passed the window obtained from the autocorrelation function of the expected chi square is used
+for all elements; if <cite>cov</cite> is a N-by-N 2D array it returns a copy of it</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The additional parameters <cite>Nrep</cite>,`Stau` and <cite>plot</cite> are ignored if <cite>cov</cite>
+corresponds to the covariance matrix, i.e. it is a N-by-N array.
+The matrix <span class="math notranslate nohighlight">\([C^{1/2} W^{1/2} (1-P) W^{1/2} C^{1/2}]\)</span> can be accessed
+by invoking the <code class="docutils literal notranslate"><span class="pre">nu</span></code> element of the <code class="docutils literal notranslate"><span class="pre">chisquare</span></code> class</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chiexp.chisquare.chisq">
+<span class="sig-name descname"><span class="pre">chisq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chiexp.chisquare.chisq" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the chi square from the input parameters <cite>p</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chiexp.chisquare.derfit">
+<span class="sig-name descname"><span class="pre">derfit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chiexp.chisquare.derfit" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the derivative of the parameters w.r.t. Y</p>
+<p>At the minimum the parameters depend on the input observables; their
+errors can be obtained by error propagation through the derivatives
+provided by this routine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the derivatives <code class="docutils literal notranslate"><span class="pre">der(i,a)</span> <span class="pre">=</span> <span class="pre">dp(a)/dy(i)</span></code></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chiexp.chisquare.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_search</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chiexp.chisquare.fit" title="Link to this definition">¶</a></dt>
+<dd><p>Minimizes the chi square starting from the initial guess parameters <cite>p0</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p0</strong> (<em>array</em>) – the initial guess values of the parameters</p></li>
+<li><p><strong>min_search</strong> (<em>function</em>) – an external minimizer</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>output parameters and the value of the chi square at the minimum</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chiexp.chisquare.pvalue">
+<span class="sig-name descname"><span class="pre">pvalue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'eig'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chiexp.chisquare.pvalue" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the p-value of the fit</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – string specifying the method to estimate the
+quality of fit. Accepted values are ‘MC’ for a pure Monte Carlo estimate
+or ‘eig’ (default) for the formula based on the eigenvalues of the matrix <cite>nu</cite>.</p></li>
+<li><p><strong>nmc</strong> (<em>int</em><em>, </em><em>optional</em>) – number of Monte Carlo samples used to estimate the quality of fit.
+Default is 5000.</p></li>
+<li><p><strong>plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – if set to True plots the probabilty distribution of the
+expected chi square</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the quality of fit, the error of the quality of fit and the Monte Carlo history of the expected chi square</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The class must know the value of the chi square at the
+minimum, which means that either <cite>fit</cite> or <cite>chisq</cite> must
+be called before <cite>qfit</cite>.
+If method is set to ‘MC’ the error of the quality of fit is based only the
+MC sampling.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chiexp.chisquare.set_pars">
+<span class="sig-name descname"><span class="pre">set_pars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chiexp.chisquare.set_pars" title="Link to this definition">¶</a></dt>
+<dd><p>Sets the parameters to the input values <cite>p0</cite></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="examples-of-usage">
+<h2>Examples of usage<a class="headerlink" href="#examples-of-usage" title="Link to this heading">¶</a></h2>
+<p>First we define a new instance of the <cite>chisquare</cite> class; in the
+following example we do it for an uncorrelated fit</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">dy</span><span class="p">]</span> <span class="o">=</span> <span class="n">load_your_data_set</span><span class="p">()</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="c1"># if dy is the error of y we define W for an uncorrelated fit</span>
+<span class="linenos">4</span><span class="n">W</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span><span class="o">/</span><span class="n">e</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">dy</span><span class="p">]</span>
+<span class="linenos">5</span>
+<span class="linenos">6</span><span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="n">a</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">m</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+<span class="linenos">7</span><span class="n">dfunc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="p">[</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">m</span><span class="o">*</span><span class="n">x</span><span class="p">),</span> <span class="o">-</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">m</span><span class="o">*</span><span class="n">x</span><span class="p">)]</span>
+<span class="linenos">8</span>
+<span class="linenos">9</span><span class="n">c</span><span class="o">=</span><span class="n">chisquare</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">func</span><span class="p">,</span><span class="n">dfunc</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the minimum of <span class="math notranslate nohighlight">\(\chi^2\)</span> is not know the user can use the
+<code class="docutils literal notranslate"><span class="pre">fit</span></code> method; otherwise the values of
+the parameters at the minimum can be passed to the class
+via the <code class="docutils literal notranslate"><span class="pre">chisq</span></code> method</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimize</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">1.</span><span class="p">]</span> <span class="c1"># guess values of the paramters</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="n">c2</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">minimize</span><span class="p">)</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># or pass the parameters at the minimum</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">chisq</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The user can also compute the error of the fitted
+parameters from the errors (fluctuations) of the input
+observables <span class="math notranslate nohighlight">\(Y\)</span>. To do so the derivatives
+<span class="math notranslate nohighlight">\(d p_\alpha / d y_i\)</span> (defined at the minimum of
+the <span class="math notranslate nohighlight">\(\chi^2\)</span>) are needed and if the covariance
+matrix is known, applying the chain rule returns the wanted
+errors</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">der</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">derfit</span><span class="p">()</span> <span class="c1"># N x Na matrix</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">der</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">cov</span> <span class="o">@</span> <span class="n">der</span><span class="p">)</span> <span class="c1"># errors of parameters</span>
+</pre></div>
+</div>
+<p><span class="math notranslate nohighlight">\(\langle \chi^2 \rangle\)</span> can be computed using the
+method <cite>chiexp</cite></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">ce</span><span class="p">,</span> <span class="n">dce</span><span class="p">,</span> <span class="n">_</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">chiexp</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># if cov contains the fluctuations of M configs and 2 replica</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nr</span> <span class="o">=</span> <span class="p">[</span><span class="n">N1</span> <span class="n">N2</span><span class="p">]</span> <span class="c1"># such that M=N1+N2</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">M</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nr</span><span class="p">)</span>
+<span class="linenos">6</span><span class="go">0</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">ce</span><span class="p">,</span><span class="n">dce</span><span class="p">,</span><span class="n">covest</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">chiexp</span><span class="p">(</span><span class="n">cov</span><span class="p">,</span><span class="n">Nrep</span><span class="o">=</span><span class="n">nr</span><span class="p">,</span><span class="n">Stau</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally the quality of fit is estimated from a Monte-Carlo
+chain of length <cite>nmc</cite></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nmc</span><span class="o">=</span><span class="mi">10000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">pvalue</span><span class="p">(</span><span class="n">nmc</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The method <cite>pvalue</cite> returns the quality of fit and its error,
+<cite>p</cite> and <cite>dp</cite> respectively, and the Monte Carlo history of
+<span class="math notranslate nohighlight">\(\chi^2\)</span> <cite>h</cite>. If the <cite>plot</cite> flag is activated a plot is automatically
+generated with the distribution probability, namely a
+normalized histogram of <cite>h</cite>.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Python documentation</a><ul>
+<li><a class="reference internal" href="#module-chiexp">The chisquare class</a><ul>
+<li><a class="reference internal" href="#chiexp.chisquare"><code class="docutils literal notranslate"><span class="pre">chisquare</span></code></a><ul>
+<li><a class="reference internal" href="#chiexp.chisquare.chiexp"><code class="docutils literal notranslate"><span class="pre">chisquare.chiexp()</span></code></a></li>
+<li><a class="reference internal" href="#chiexp.chisquare.chisq"><code class="docutils literal notranslate"><span class="pre">chisquare.chisq()</span></code></a></li>
+<li><a class="reference internal" href="#chiexp.chisquare.derfit"><code class="docutils literal notranslate"><span class="pre">chisquare.derfit()</span></code></a></li>
+<li><a class="reference internal" href="#chiexp.chisquare.fit"><code class="docutils literal notranslate"><span class="pre">chisquare.fit()</span></code></a></li>
+<li><a class="reference internal" href="#chiexp.chisquare.pvalue"><code class="docutils literal notranslate"><span class="pre">chisquare.pvalue()</span></code></a></li>
+<li><a class="reference internal" href="#chiexp.chisquare.set_pars"><code class="docutils literal notranslate"><span class="pre">chisquare.set_pars()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples-of-usage">Examples of usage</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="matlabdoc.html" title="Matlab documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ChiExp 0.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Python documentation</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2017-22, Mattia Bruno, Rainer Sommer.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

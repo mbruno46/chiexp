@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Matlab documentation &#8212; ChiExp 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Python documentation" href="pydoc.html" />
+    <link rel="prev" title="ChiExp Documentation" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pydoc.html" title="Python documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="ChiExp Documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ChiExp 0.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Matlab documentation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="matlab-documentation">
+<h1>Matlab documentation<a class="headerlink" href="#matlab-documentation" title="Link to this heading">¶</a></h1>
+<p>The matlab package contains three functions:</p>
+<dl class="field-list simple">
+<dt class="field-odd">derfit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>computes the derivatives of the parameters w.r.t. the input observable Y at the minimum</p>
+</dd>
+<dt class="field-even">chiexp<span class="colon">:</span></dt>
+<dd class="field-even"><p>computes the expected <span class="math notranslate nohighlight">\(\chi^2\)</span></p>
+</dd>
+<dt class="field-odd">qfit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>computes the quality of fit</p>
+</dd>
+</dl>
+<section id="derfit">
+<h2>derfit<a class="headerlink" href="#derfit" title="Link to this heading">¶</a></h2>
+<p>At the minimum of the <span class="math notranslate nohighlight">\(\chi^2\)</span>, the parameters depend on the input
+observables Y. This function computes their derivatives w.r.t. Y:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">der</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">derfit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="s">&#39;field&#39;</span><span class="p">,</span><span class="n">value</span><span class="p">);</span>
+</pre></div>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul>
+<li><p><strong>X, Y</strong> - arrays with N entries; Y is assumed to contain the
+central values of the observable</p></li>
+<li><p><strong>W</strong> - weight matrix, N-by-N, used in the fit</p></li>
+<li><p><strong>p</strong> - array with the values of the parameters at the minimum</p></li>
+<li><p><strong>field</strong> - a string whose admitted values as <code class="docutils literal notranslate"><span class="pre">'f'</span></code> and <code class="docutils literal notranslate"><span class="pre">'df'</span></code></p></li>
+<li><p><strong>value</strong> - the value corresponding to one of the two strings above</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>df</strong> - the gradient of the function f. An array of functions is expected
+<code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">&#64;(x,p)</span> <span class="pre">[df/dp1</span> <span class="pre">df/dp2</span> <span class="pre">...]</span></code></p></li>
+<li><p><strong>f</strong> - fitted function. It must be passed in the form <code class="docutils literal notranslate"><span class="pre">f=&#64;(x,p)</span> <span class="pre">f(x,p)</span></code>;
+if passed together with <cite>df</cite> it is used to check numerically the
+provided gradient; if passed without <cite>df</cite> it is used to numerically compute
+the gradient</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+<dt class="field-even">Additional arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>c</strong> <em>(optional)</em>: array of length N used as additional argument for
+<cite>f</cite> and <cite>df</cite>, which
+in this case must obey the syntax <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">=</span> <span class="pre">&#64;(x,p,c)</span> <span class="pre">f(x,p,c)</span></code> (same for <cite>df</cite>);
+it can be useful for global fits</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>der</strong>: a N-by-NA matrix, with NA the number of parameters; contains the derivatives
+of the parameters <code class="docutils literal notranslate"><span class="pre">der(i,a)</span> <span class="pre">=</span> <span class="pre">dp(a)/dy(i)</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Examples</strong>:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c">% derfit can be used in two ways:</span>
+<span class="linenos"> 2</span><span class="c">% either by passing the function (numerical gradient)</span>
+<span class="linenos"> 3</span><span class="n">func</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="n">der</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">derfit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="s">&#39;f&#39;</span><span class="p">,</span><span class="n">func</span><span class="p">);</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="c">% or by passing the gradient (analytical)</span>
+<span class="linenos"> 7</span><span class="n">grad</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">];</span>
+<span class="linenos"> 8</span><span class="n">der</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">derfit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="s">&#39;df&#39;</span><span class="p">,</span><span class="n">grad</span><span class="p">);</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="c">% if both are passed, the function is used to check the</span>
+<span class="linenos">11</span><span class="c">% gradient</span>
+<span class="linenos">12</span><span class="n">der</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">derfit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="s">&#39;f&#39;</span><span class="p">,</span><span class="n">func</span><span class="p">,</span><span class="s">&#39;df&#39;</span><span class="p">,</span><span class="n">grad</span><span class="p">);</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="c">% additional argumemts</span>
+<span class="linenos">15</span><span class="n">der</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">derfit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="s">&#39;f&#39;</span><span class="p">,</span><span class="n">func</span><span class="p">,</span><span class="s">&#39;df&#39;</span><span class="p">,</span><span class="n">grad</span><span class="p">,</span><span class="s">&#39;c&#39;</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="chiexp">
+<h2>chiexp<a class="headerlink" href="#chiexp" title="Link to this heading">¶</a></h2>
+<p>This function computes the expected <span class="math notranslate nohighlight">\(\chi^2\)</span>. The covariance matrix is
+automatically estimated from the fluctuations of Y, but the user can also
+provide it independently:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">ce</span><span class="p">,</span><span class="n">dce</span><span class="p">,</span><span class="n">nu</span><span class="p">,</span><span class="n">covest</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">chiexp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="nb">cov</span><span class="p">,</span><span class="s">&#39;field&#39;</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul>
+<li><p><strong>X, Y</strong> - arrays with N entries</p></li>
+<li><p><strong>W</strong> - weight matrix. It can be an array of dimensions N or a matrix of
+dimension NxN. In the first case a diagonal weight matrix is automatically
+created</p></li>
+<li><p><strong>p</strong> - array with the values of the parameters at the minimum</p></li>
+<li><p><strong>cov</strong> - if cov is a N-by-N matrix, the programs takes it as the covariance
+matrix, assuming the user has previously computed it; if cov is a
+M-by-N matrix, the program assumes that it contains the values of the
+N observables Y on M different configurations.</p></li>
+<li><p><strong>field</strong> - a string whose admitted values as <code class="docutils literal notranslate"><span class="pre">'f'</span></code> and <code class="docutils literal notranslate"><span class="pre">'df'</span></code></p></li>
+<li><p><strong>value</strong> - the value corresponding to one of the two strings above</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>f</strong> - fitted function. It must be passed in the form <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">=</span> <span class="pre">&#64;(x,p)</span> <span class="pre">f(x,p)</span></code>;
+this argument is ignored if <cite>df</cite> is passed</p></li>
+<li><p><strong>df</strong>: the gradient of the function f. An array of functions is expected
+<code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">&#64;(x,p)</span> <span class="pre">[df/dp1</span> <span class="pre">df/dp2</span> <span class="pre">...]</span></code>. If empty, the gradient is computed
+numerically and <em>f</em> must be passed</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Additional parameters can be passed using the syntax:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="p">[</span><span class="n">ce</span><span class="p">,</span><span class="n">dce</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">chiexp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="nb">cov</span><span class="p">,</span><span class="s">&#39;df&#39;</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="s">&#39;field1&#39;</span><span class="p">,</span><span class="n">value1</span><span class="p">,</span><span class="s">&#39;field2&#39;</span><span class="p">,</span><span class="n">value2</span><span class="k">...</span><span class="c">)</span>
+<span class="linenos">2</span><span class="c">% or</span>
+<span class="linenos">3</span><span class="p">[</span><span class="n">ce</span><span class="p">,</span><span class="n">dce</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">chiexp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="nb">cov</span><span class="p">,</span><span class="s">&#39;f&#39;</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="s">&#39;field1&#39;</span><span class="p">,</span><span class="n">value1</span><span class="p">,</span><span class="s">&#39;field2&#39;</span><span class="p">,</span><span class="n">value2</span><span class="k">...</span><span class="c">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Additional arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> <em>(optional)</em>: array of length N used as additional argument for
+<cite>f</cite> and <cite>df</cite>, which
+in this case must obey the syntax <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">=</span> <span class="pre">&#64;(x,p,c)</span> <span class="pre">f(x,p,c)</span></code> (same for <cite>df</cite>);
+it can be useful for global fits</p></li>
+<li><p><strong>Nrep</strong> <em>(optional)</em>: array with the number of configurations belonging to
+each replica, e.g. <code class="docutils literal notranslate"><span class="pre">[N1</span> <span class="pre">N2</span> <span class="pre">N3</span> <span class="pre">...]</span></code>.
+If not given, the number of replica is assumed to be 1.</p></li>
+<li><p><strong>Stau</strong> <em>(optional)</em>: value of the parameter Stau. Default is 1.5.</p></li>
+<li><p><strong>plot</strong> <em>(optional)</em>: flag to produce a plot of the expected
+<span class="math notranslate nohighlight">\(\chi^2\)</span> as a function of the
+window. Default is <code class="docutils literal notranslate"><span class="pre">'off'</span></code>. Accepted values are <code class="docutils literal notranslate"><span class="pre">'on'</span></code> and <code class="docutils literal notranslate"><span class="pre">'off'</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ce, dce</strong> - the values of <span class="math notranslate nohighlight">\(\langle \chi^2 \rangle\)</span> and its error</p></li>
+<li><p><strong>nu</strong>: the matrix <span class="math notranslate nohighlight">\(\big[ C^{1/2} W^{1/2} (1-P) W^{1/2} C^{1/2} \big]\)</span></p></li>
+<li><p><strong>covest</strong>: the estimated covariance matrix using the window obtained
+from the expected <span class="math notranslate nohighlight">\(\chi^2\)</span> (which may not be adeguate for general purposes)</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Examples</strong>:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c">% chiexp can be used in two ways:</span>
+<span class="linenos"> 2</span><span class="c">% either by passing the function (numerical gradient)</span>
+<span class="linenos"> 3</span><span class="n">func</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="p">[</span><span class="n">ce</span><span class="p">,</span><span class="n">dce</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">chiexp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="nb">cov</span><span class="p">,</span><span class="s">&#39;f&#39;</span><span class="p">,</span><span class="n">func</span><span class="p">);</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="c">% or by passing the gradient (analytical)</span>
+<span class="linenos"> 7</span><span class="n">grad</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">];</span>
+<span class="linenos"> 8</span><span class="p">[</span><span class="n">ce</span><span class="p">,</span><span class="n">dce</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">chiexp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="nb">cov</span><span class="p">,</span><span class="s">&#39;df&#39;</span><span class="p">,</span><span class="n">grad</span><span class="p">);</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="c">% if cov is M-by-N and has 2 replica</span>
+<span class="linenos">11</span><span class="n">Nrep</span><span class="p">=[</span><span class="n">N1</span><span class="p">,</span><span class="w"> </span><span class="n">N2</span><span class="p">];</span><span class="w"> </span><span class="c">% M=N1+N2</span>
+<span class="linenos">12</span><span class="p">[</span><span class="n">ce</span><span class="p">,</span><span class="n">dce</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">chiexp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="nb">cov</span><span class="p">,</span><span class="s">&#39;df&#39;</span><span class="p">,</span><span class="n">grad</span><span class="p">,</span><span class="s">&#39;Nrep&#39;</span><span class="p">,</span><span class="n">Nrep</span><span class="p">,</span><span class="s">&#39;Stau&#39;</span><span class="p">,</span><span class="mf">2.5</span><span class="p">);</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="c">% full output</span>
+<span class="linenos">15</span><span class="p">[</span><span class="n">ce</span><span class="p">,</span><span class="n">dce</span><span class="p">,</span><span class="n">nu</span><span class="p">,</span><span class="n">covest</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">chiexp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="nb">cov</span><span class="p">,</span><span class="s">&#39;df&#39;</span><span class="p">,</span><span class="n">grad</span><span class="p">);</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="c">% for W^-1 = diag(C)</span>
+<span class="linenos">18</span><span class="p">[</span><span class="n">ce</span><span class="p">,</span><span class="n">dce</span><span class="p">,</span><span class="n">nu</span><span class="p">,</span><span class="n">covest</span><span class="p">,</span><span class="n">ce2</span><span class="p">,</span><span class="n">dce2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">chiexp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <cite>W</cite> is an array of length N corresponding to the diagonal
+entries of the covariance matrix, the expected <span class="math notranslate nohighlight">\(\chi^2\)</span> can be obtained with a
+second formula. To have both results the user must request two additional
+output arguments, that will contain
+<span class="math notranslate nohighlight">\(\langle \chi^2 \rangle = N - \mathrm{tr}\big[C W^{1/2} P W^{1/2}\big]\)</span>
+and its error</p>
+</div>
+</section>
+<section id="qfit">
+<h2>qfit<a class="headerlink" href="#qfit" title="Link to this heading">¶</a></h2>
+<p>The quality of fit and its error are estimated from a Monte Carlo integration.:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Q</span><span class="p">,</span><span class="n">dQ</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">qfit</span><span class="p">(</span><span class="n">nmc</span><span class="p">,</span><span class="n">nu</span><span class="p">,</span><span class="n">c2</span><span class="p">,</span><span class="nb">plot</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Input arguments</strong>:</p>
+<ul class="simple">
+<li><p><cite>nmc</cite>: the size of the Monte Carlo chain</p></li>
+<li><p><cite>nu</cite>: the matrix returned from the function <cite>chiexp</cite></p></li>
+<li><p><cite>c2</cite>: the value of the <span class="math notranslate nohighlight">\(\chi^2\)</span> obtained from the fitting procedure</p></li>
+<li><dl class="simple">
+<dt><cite>plot</cite> (<em>optional</em>): is passed a histogram with normalized distribution</dt><dd><p>probability obtained from the Monte Carlo process is plotted</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<ul class="simple">
+<li><p><cite>Q,dQ</cite>: the quality of fit and its error</p></li>
+</ul>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Matlab documentation</a><ul>
+<li><a class="reference internal" href="#derfit">derfit</a></li>
+<li><a class="reference internal" href="#chiexp">chiexp</a></li>
+<li><a class="reference internal" href="#qfit">qfit</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pydoc.html" title="Python documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="ChiExp Documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ChiExp 0.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Matlab documentation</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2017-22, Mattia Bruno, Rainer Sommer.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

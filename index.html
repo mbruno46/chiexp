@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ChiExp Documentation &#8212; ChiExp 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Matlab documentation" href="matlabdoc.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="matlabdoc.html" title="Matlab documentation"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">ChiExp 0.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ChiExp Documentation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="chiexp-documentation">
+<h1>ChiExp Documentation<a class="headerlink" href="#chiexp-documentation" title="Link to this heading">¶</a></h1>
+<p>A package to compute the expectation value of the <span class="math notranslate nohighlight">\(\chi^2\)</span> defined
+from arbitrary weight matrices <span class="math notranslate nohighlight">\(W\)</span></p>
+<div class="math notranslate nohighlight">
+\[\chi^2 = \sum_{i,j} [y_i - f(x_i,a)] W_{ij} [y_j - f(x_j,a)]\]</div>
+<p>The implementation is based on the results of Ref. <a class="footnote-reference brackets" href="#id3" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
+and we summarize below the main equation</p>
+<div class="math notranslate nohighlight">
+\[\langle \chi^2 \rangle = \mathrm{tr} \ \big[C_W W^{1/2} (1-P) W^{1/2} \big] \,,
+\quad C_W = W^{1/2} C W^{1/2}\]</div>
+<p>with <span class="math notranslate nohighlight">\(C\)</span> being the covariance matrix and <span class="math notranslate nohighlight">\(P\)</span> a projector,
+defined from the function <span class="math notranslate nohighlight">\(f\)</span>
+and its derivatives computed at the minimum of the <span class="math notranslate nohighlight">\(\chi^2\)</span>
+(for more details read Ref. <a class="footnote-reference brackets" href="#id3" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>).</p>
+<p>Autocorrelations can be taken into account in a straight-forward manner by replacing</p>
+<div class="math notranslate nohighlight">
+\[C_{ij} = \frac{1}{N} \sum_{t=-\infty}^\infty \Gamma_{ij}(t) \,,\]</div>
+<p>with <span class="math notranslate nohighlight">\(N\)</span> the number of configurations and <span class="math notranslate nohighlight">\(\Gamma\)</span> the autocorrelation function.</p>
+<p>The package contains libraries for both Matlab and Python.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">The documentation can be found here</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="matlabdoc.html">Matlab documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pydoc.html">Python documentation</a></li>
+</ul>
+</div>
+<p>Further details can be found by typing <cite>help chiexp</cite> in Matlab
+or <cite>help(chisquare)</cite> in Python.</p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>)</span>
+<ol class="upperalpha simple" start="13">
+<li><p>Bruno, R. Sommer, <a class="reference external" href="https://inspirehep.net/literature/2157883">On fits to correlated and auto-correlated data</a> <em>Comput.Phys.Commun.</em> 285 (2023) 108643.</p></li>
+</ol>
+</aside>
+</aside>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">ChiExp Documentation</a><ul>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="matlabdoc.html" title="Matlab documentation"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">ChiExp 0.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ChiExp Documentation</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2017-22, Mattia Bruno, Rainer Sommer.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>
